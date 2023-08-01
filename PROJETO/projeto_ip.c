@@ -76,6 +76,16 @@ void init_cidades(Transito *n1){
 
 
 
+void comparar_string(){}
+
+void calc_distancia(){}
+
+void calc_tempo(){}
+
+void calc_combustivel(){}
+
+void calc_preco_combustivel(){}
+
 
 
 int main(){
