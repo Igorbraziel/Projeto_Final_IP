@@ -57,11 +57,11 @@ void init_cidades(Transito *n1){
     char city[9][50] = {
         "vazio",
         "goiania", 
-        "aparecida de Goiania", 
+        "aparecida de goiania", 
         "anapolis",
-        "rio Verde",
+        "rio verde",
         "trindade",
-        "caldas Novas",
+        "caldas novas",
         "goianira",
         "jatai"
     };
