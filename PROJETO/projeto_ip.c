@@ -81,13 +81,6 @@ void init_cidades(Transito *n1){
 
 void comparar_string(Transito *n1, char cidade){
 
-    int i, j, x;
-    
-    while(i<9){
-        x = strcmp(n1->cidades, cidade);
-        if(x==1) break; 
-    }
-
 }
 
 void calc_distancia(){}
@@ -105,20 +98,18 @@ void qual_cidade_abastecer(){}
 int main(){
     Transito n1;
     int qtd, i;
-    char cidade[MAX];
+
 
     n1.distancia = NULL;
     n1.cidades = NULL;
 
     introducao();
 
-    scanf("%[^\n]%*c", cidade);
-
     init_distancia(&n1); //inicializando a distancia entre as cidades com alocacao de memoria
 
     init_cidades(&n1); //inicializando o nome das cidades com alocacao de memoria
 
-    comparar_string(&n1, cidade); // comparar string
+    
 
     return 0;
 }
