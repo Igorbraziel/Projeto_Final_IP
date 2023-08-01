@@ -79,7 +79,7 @@ void init_cidades(Transito *n1){
 
 
 
-void comparar_string(Transito *n1, char cidade){
+void comparar_string(){
 
 }
 
