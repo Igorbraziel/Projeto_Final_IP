@@ -112,6 +112,7 @@ int main(){
 
     introducao();
 
+    scanf("%[^\n]%*c", cidade);
 
     init_distancia(&n1); //inicializando a distancia entre as cidades com alocacao de memoria
 
