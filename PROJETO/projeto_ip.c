@@ -86,6 +86,8 @@ void calc_combustivel(){}
 
 void calc_preco_combustivel(){}
 
+void qual_cidade_abastecer(){}
+
 
 
 int main(){
