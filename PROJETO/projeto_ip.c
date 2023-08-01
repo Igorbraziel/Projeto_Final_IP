@@ -74,6 +74,10 @@ void init_cidades(Transito *n1){
     }
 }
 
+
+
+
+
 int main(){
     Transito n1;
     int qtd, i;
