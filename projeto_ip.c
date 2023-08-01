@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void introducao(){
+
+    printf("==========================================================ANÁLISE DE VIAGENS==========================================================\n\n");
+    
+}
+
 struct transito{
     int **distancia;
     char **cidades;
@@ -75,17 +81,11 @@ int main(){
     n1.distancia = NULL;
     n1.cidades = NULL;
 
+    introducao();
+
     init_distancia(&n1); //inicializando a distancia entre as cidades com alocacao de memoria
 
     init_cidades(&n1); //inicializando o nome das cidades com alocacao de memoria
-
-    printf("Seja bem-vindo(a) ao nosso mini-game de um fluxo de veiculo sobre algumas cidades, divirta-se\n"); //introducao
-
-    printf("Digite o numero da cidade em que voce deseja iniciar dentre as listadas abaixo:\n");
-
-    //isso é um teste
-
-
 
     return 0;
 }
