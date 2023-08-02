@@ -57,16 +57,37 @@ void init_cidades(Transito *n1){
         n1->cidades[i] = (char *) malloc(50 * sizeof(char)); //alocando cada linha da matriz de char
     }
 
-    char city[9][50] = {
-        "vazio",
-        "goiania", 
-        "aparecida de goiania", 
-        "anapolis",
-        "rio verde",
-        "trindade",
-        "caldas novas",
-        "goianira",
-        "jatai"
+    char city[30][100] = {
+                        "Uruaçu",
+                        "Sao Miguel do Araguaia",
+                        "Santa Rita do Araguaia",
+                        "Santa Helena de Goiás",
+                        "Rio Verde", 
+                        "Posse", 
+                        "PORANGATU", 
+                        "Pires do Rio",  
+                        "Pirenopolis",   
+                        "Pilar de Goias",
+                        "Niquelandia",   
+                        "Mineiros",      
+                        "Minaçu",        
+                        "Luziania",      
+                        "Jatai",         
+                        "Itumbiara",     
+                        "Itaja",         
+                        "Goiania",       
+                        "Goianesia",     
+                        "Goias",         
+                        "Formosa",       
+                        "Cristalina",    
+                        "Ceres",         
+                        "Catalao",       
+                        "Campos Belos" , 
+                        "Caldas Novas",  
+                        "Brasilia",      
+                        "Anapolis",      
+                        "Aruana",        
+                        "Aragarças",     
     };
 
     for(i = 0; i < 9; i++){
