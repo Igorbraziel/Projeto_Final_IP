@@ -91,9 +91,10 @@ void free_matrizes(Transito *n1){
 
 void print_cidades(Transito n1){
     int i;
+    printf("\n\nAS CIDADES DISPONÍVEIS NO MOMENTO SÃO:\n\n");
     for(i = 0; i < 9; i++){
         if(i > 0){
-            printf("%d.%s\n", i, n1.cidades[i]);
+            printf("-%s\n", n1.cidades[i]);
         }
     }
     printf("\n");
