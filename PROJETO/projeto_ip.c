@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<string.h>
+#include <string.h>
 
 #define MAX 100
 
@@ -77,10 +77,41 @@ void init_cidades(Transito *n1){
     }
 }
 
+void free_matrizes(Transito *n1){
+    int i;
+
+    for(i = 0; i < 9; i++){
+        free(n1->cidades[i]);
+        free(n1->distancia[i]);
+    }
+
+    free(n1->cidades);
+    free(n1->distancia);
+}
+
+void print_cidades(Transito n1){
+    int i;
+    for(i = 0; i < 9; i++){
+        if(i > 0){
+            printf("%d.%s\n", i, n1.cidades[i]);
+        }
+    }
+    printf("\n");
+}
 
 
-void comparar_string(){
 
+int comparar_string(Transito n1, char *str){
+    int i;
+    while(1){
+        for(i = 0; i < 9; i++){
+            if(strcmp(n1.cidades[i], str) == 0){
+                return i;
+            }
+        }
+        printf("Cidade nao encontrada, digite novamente por favor: ");
+        scanf("%[^\n]%*c", str); // leio a string ate o enter
+    }
 }
 
 void calc_distancia(){}
@@ -97,19 +128,36 @@ void qual_cidade_abastecer(){}
 
 int main(){
     Transito n1;
-    int qtd, i;
-
+    int qtd, i, indice;
+    int *pi;
+    char str[50];
 
     n1.distancia = NULL;
     n1.cidades = NULL;
-
-    introducao();
 
     init_distancia(&n1); //inicializando a distancia entre as cidades com alocacao de memoria
 
     init_cidades(&n1); //inicializando o nome das cidades com alocacao de memoria
 
-    
+    introducao();
+
+    printf("Digite a quantidade de cidades que voce deseja percorrer: ");
+
+    scanf("%d%*c", &qtd);
+
+    pi = (int *) malloc(qtd * sizeof(int)); // alocando a memoria necessaria para armazenar os indices das cidades
+
+    printf("Digite o nome da cidade que voce deseja inicializar seu trajeto, em letras minusculas:\n");
+
+    print_cidades(n1); //mostro na tela as cidades disponiveis para navegação
+
+    scanf("%[^\n]%*c", str); // leio a string ate o enter
+
+    indice = comparar_string(n1, str);
+
+    free_matrizes(&n1); // liberando memoria alocada  
+
+    free(pi); // liberando memoria alocada 
 
     return 0;
 }
