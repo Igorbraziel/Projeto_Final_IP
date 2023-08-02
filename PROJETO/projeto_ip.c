@@ -7,7 +7,7 @@
 void introducao(){
 
     printf("==========================================================ANÁLISE DE VIAGENS==========================================================\n\n");
-    
+    printf("Digite a quantidade de cidades que voce deseja percorrer: ");
 }
 
 struct transito{
@@ -115,9 +115,27 @@ int comparar_string(Transito n1, char *str){
     }
 }
 
-void calc_distancia(){}
 
-void calc_tempo(){}
+int calc_distancia(Transito n1, int indice_partida, int indice_destino){
+
+    int km;
+
+    km = n1.distancia[indice_partida][indice_destino];
+
+    return km;
+}
+
+void calc_tempo(int km, int *horas, int *minutos){
+    
+    int tempo;   
+
+    tempo = (km * 60)/80;
+
+    *horas = tempo / 60;
+    *minutos = tempo % 60;
+ 
+}
+
 
 void calc_combustivel(){}
 
@@ -129,9 +147,11 @@ void qual_cidade_abastecer(){}
 
 int main(){
     Transito n1;
-    int qtd, i, indice;
+    int qtd, i, indice_partida, indice_destino;
     int *pi;
-    char str[50];
+    char partida[50], destino[50];
+    int distancia;
+    int horas, minutos;
 
     n1.distancia = NULL;
     n1.cidades = NULL;
@@ -142,8 +162,6 @@ int main(){
 
     introducao();
 
-    printf("Digite a quantidade de cidades que voce deseja percorrer: ");
-
     scanf("%d%*c", &qtd);
 
     pi = (int *) malloc(qtd * sizeof(int)); // alocando a memoria necessaria para armazenar os indices das cidades
@@ -152,9 +170,32 @@ int main(){
 
     print_cidades(n1); //mostro na tela as cidades disponiveis para navegação
 
-    scanf("%[^\n]%*c", str); // leio a string ate o enter
+    scanf("%[^\n]%*c", partida); // leio a string ate o enter
 
-    indice = comparar_string(n1, str);
+    indice_partida = comparar_string(n1, partida);
+
+    printf("\n\nDigite o nome da cidade destino, em letras minusculas:\n\n");
+
+    scanf("%[^\n]%*c", destino);
+
+    indice_destino = comparar_string(n1, destino);
+
+    distancia = calc_distancia(n1, indice_partida, indice_destino);
+
+    calc_tempo(distancia, &horas, &minutos);
+
+    printf("Sua viagem demorará %d horas e %d minutos\n", horas, minutos);
+
+
+
+
+
+
+
+
+
+
+
 
     free_matrizes(&n1); // liberando memoria alocada  
 
