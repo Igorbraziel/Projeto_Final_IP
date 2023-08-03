@@ -179,7 +179,7 @@ void calc_tempo(int km, int *horas, int *minutos){
 }
 
 
-int calc_combustivel(Transito n1, int i, int j){
+int qual_cidade_abastecer(Transito n1, int i, int j){
     int km;
 
     km = calc_distancia(n1, i, j); // somente para gasolina
@@ -202,13 +202,9 @@ int calc_combustivel(Transito n1, int i, int j){
 
 void calc_preco_combustivel(Transito *n1, float combustivel){
 
-    n1->dinheiro = 5.50 * combustivel;
+    n1->dinheiro = 5.50 * combustivel; // calcula a quantidade gasta de dinheiro para colocar a quantidade de litros de gasolina
 
 }
-
-void qual_cidade_abastecer(){}
-
-
 
 int main(){
     Transito n1;
@@ -270,7 +266,7 @@ int main(){
         vetorIndices[i] = comparar_string(n1, str); // coloco o indice da cidade no meu vetor de indices
 
         while(1){
-            if(calc_combustivel(n1, vetorIndices[i - 1], vetorIndices[i]) == 1){
+            if(qual_cidade_abastecer(n1, vetorIndices[i - 1], vetorIndices[i]) == 1){
 
                 printf("\nVoce devera abastecer em %s\n", n1.cidades[vetorIndices[i - 1]]);
 
@@ -286,7 +282,7 @@ int main(){
             }
         }
 
-        km += calc_distancia(n1, vetorIndices[i - 1], vetorIndices[i]);
+        km += calc_distancia(n1, vetorIndices[i - 1], vetorIndices[i]); //acumula a distancia em km entre as cidades
 
         i++;
         qtd--;
