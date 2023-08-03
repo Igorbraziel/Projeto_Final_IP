@@ -179,25 +179,19 @@ void calc_tempo(int km, int *horas, int *minutos){
 }
 
 
-int qual_cidade_abastecer(Transito n1, int i, int j){
-    int km;
+float qual_cidade_abastecer(Transito n1, int i, int j){
+    int km, autonomia;
 
     km = calc_distancia(n1, i, j); // somente para gasolina
 
-    while(1){
-        if(km > 12){
-            n1.combustivel--;
-            km -= 12;
-        } else{
-            break;
-        }
-    }
+    autonomia = (km/12);
 
-    if(n1.combustivel < 0){
-        return 1; // significa que o combustivel nao vai ser o suficiente para chegar na proxima cidade
-    } else{
-        return 2; // significa que o combustivel é suficiente para chegar na proxima cidade
-    }
+    printf("Serao necessarios abastecimentos de %d Litros em %s para chegar ao destino\n\n", autonomia, n1.cidades[i]);
+
+    printf("O abastecimento do veiculo custou R$%.2f\n\n", autonomia * 5.50);
+
+    return (autonomia * 5.50);
+
 }
 
 void calc_preco_combustivel(Transito *n1, float combustivel){
@@ -247,40 +241,24 @@ int main(){
 
     for(k = qtd; k > 0; k--){
 
-        //printf("Numeros de viagens disponiveis: %d\n\n", qtd);
+        printf("Numeros de viagens disponiveis: %d\n\n", qtd);
 
-        //printf("Quantidade de kilometros percorridos: %dKM\n\n", km);
+        printf("Quantidade de kilometros percorridos: %dKM\n\n", km);
 
-        //printf("Quantidade de dinheiro gasto: R$%.2f\n\n", n1.dinheiro);
+        printf("Quantidade de dinheiro gasto: R$%.2f\n\n", n1.dinheiro);
 
-        //printf("Quantidade de combustivel disponivel: %.2f\n\n", n1.combustivel);
+        printf("Quantidade de combustivel disponivel: %.2f\n\n", n1.combustivel);
 
-        //printf("Quantidade de tempo gasto: %d horas e %d minutos\n\n", n1.horas, n1.minutos);
+        printf("Quantidade de tempo gasto: %d horas e %d minutos\n\n", n1.horas, n1.minutos);
+        printf("Voce esta em %s\n\n", n1.cidades[vetorIndices[i - 1]]);
 
-        //printf("Voce esta em %s\n\n", n1.cidades[vetorIndices[i - 1]]);
-
-        //printf("Digite o nome da cidade destino, em letras minusculas:\n");
+        printf("Digite o nome da cidade destino, em letras minusculas:\n");
 
         scanf("%[^\n]%*c", str); // leio a string ate o enter
 
         vetorIndices[i] = comparar_string(n1, str); // coloco o indice da cidade no meu vetor de indices
 
-        while(1){
-            if(qual_cidade_abastecer(n1, vetorIndices[i - 1], vetorIndices[i]) == 1){
-
-                //printf("\nVoce devera abastecer em %s\n", n1.cidades[vetorIndices[i - 1]]);
-
-                //printf("\nquantos litros de combustivel vc deseja colocar?\n");
-
-                scanf("%f%*c", &somaComb);
-
-                calc_preco_combustivel(&n1, somaComb);
-
-                n1.combustivel += somaComb;
-            } else{
-                break;
-            }
-        }
+        n1.dinheiro = (n1, vetorIndices[i - 1], vetorIndices[i]);
 
         km += calc_distancia(n1, vetorIndices[i - 1], vetorIndices[i]); //acumula a distancia em km entre as cidades
 
