@@ -247,19 +247,19 @@ int main(){
 
     for(k = qtd; k > 0; k--){
 
-        printf("Numeros de viagens disponiveis: %d\n\n", qtd);
+        //printf("Numeros de viagens disponiveis: %d\n\n", qtd);
 
-        printf("Quantidade de kilometros percorridos: %dKM\n\n", km);
+        //printf("Quantidade de kilometros percorridos: %dKM\n\n", km);
 
-        printf("Quantidade de dinheiro gasto: R$%.2f\n\n", n1.dinheiro);
+        //printf("Quantidade de dinheiro gasto: R$%.2f\n\n", n1.dinheiro);
 
-        printf("Quantidade de combustivel disponivel: %.2f\n\n", n1.combustivel);
+        //printf("Quantidade de combustivel disponivel: %.2f\n\n", n1.combustivel);
 
-        printf("Quantidade de tempo gasto: %d horas e %d minutos\n\n", n1.horas, n1.minutos);
+        //printf("Quantidade de tempo gasto: %d horas e %d minutos\n\n", n1.horas, n1.minutos);
 
-        printf("Voce esta em %s\n\n", n1.cidades[vetorIndices[i - 1]]);
+        //printf("Voce esta em %s\n\n", n1.cidades[vetorIndices[i - 1]]);
 
-        printf("Digite o nome da cidade destino, em letras minusculas:\n");
+        //printf("Digite o nome da cidade destino, em letras minusculas:\n");
 
         scanf("%[^\n]%*c", str); // leio a string ate o enter
 
@@ -268,9 +268,9 @@ int main(){
         while(1){
             if(qual_cidade_abastecer(n1, vetorIndices[i - 1], vetorIndices[i]) == 1){
 
-                printf("\nVoce devera abastecer em %s\n", n1.cidades[vetorIndices[i - 1]]);
+                //printf("\nVoce devera abastecer em %s\n", n1.cidades[vetorIndices[i - 1]]);
 
-                printf("\nquantos litros de combustivel vc deseja colocar?\n");
+                //printf("\nquantos litros de combustivel vc deseja colocar?\n");
 
                 scanf("%f%*c", &somaComb);
 
