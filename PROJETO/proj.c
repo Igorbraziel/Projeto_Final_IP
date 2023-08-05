@@ -185,7 +185,7 @@ void calc_combustivel(int combustivel, float km, int m, float kml, float *valor,
     x = combustivel-km;
 
     if(x<0){
-        printf("\n\nCombustível insuficiente\n");
+        printf("\n\nCombustível insuficiente, abasteça no posto mais próximo!!!\n");
         x*=-1;
         *litros = (x/kml);
         *valor = *litros * 5.5;
