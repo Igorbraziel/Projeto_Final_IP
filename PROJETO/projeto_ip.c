@@ -59,7 +59,7 @@ void init_distancia(Transito *n1){
         248, 917, 719, 413, 432, 310, 370, 239, 142, 296, 251, 633, 474, 61, 523, 423, 611, 203, 226, 259, 81, 126, 231, 308, 407, 303, 0, 152, 434, 503,
         238, 504, 571, 265, 284, 462, 371, 156, 64, 207, 243, 485, 464, 172, 371, 242, 463, 55, 137, 161, 233, 237, 142, 265, 559, 222, 152, 0, 336, 405,
         430, 274, 744, 438, 457, 744, 407, 492, 315, 399, 513, 658, 578, 495, 544, 558, 636, 324, 344, 175, 515, 560, 324, 630, 831, 494, 434, 336, 0, 419,  
-        498, 581, 412, 385, 333, 813, 631, 554, 384, 466, 581, 326, 724, 564, 269, 538, 472, 407, 413, 244, 584, 629, 391, 692, 900, 574, 503, 405, 419, 0,
+        498, 581, 412, 385, 333, 813, 631, 554, 384, 466, 581, 326, 724, 564, 269, 538, 472, 407, 413, 244, 584, 629, 391, 692, 900, 574, 503, 405, 419, 0
         };
 
     for(i = 0; i < 30; i++){
@@ -167,43 +167,54 @@ int calc_distancia(Transito n1, int indice_partida, int indice_destino){
     return km;
 }
 
-void calc_tempo(int km, int *horas, int *minutos){
-    
-    int tempo;   
+void calc_tempo(Transito *n1, int indicePartida, int indiceChegada){
+    int km;
 
-    tempo = (km * 60)/80;
+    km = n1->distancia[indicePartida][indiceChegada];
 
-    *horas = tempo / 60;
-    *minutos = tempo % 60;
+    n1->minutos = (60 * km) / (80);
+
+    while(n1->minutos >= 60){
+        n1->horas++;
+        n1->minutos -= 60;
+    }
  
 }
 
 
-int qual_cidade_abastecer(Transito n1, int i, int j){
+float qual_cidade_abastecer(Transito n1, int i, int j){
     int km;
 
     km = calc_distancia(n1, i, j); // somente para gasolina
 
     while(1){
         if(km > 12){
-            n1.combustivel--;
             km -= 12;
+            n1.combustivel--;
         } else{
             break;
         }
     }
 
-    if(n1.combustivel < 0){
-        return 1; // significa que o combustivel nao vai ser o suficiente para chegar na proxima cidade
+    if(n1.combustivel > 0){
+        return 2;
     } else{
-        return 2; // significa que o combustivel é suficiente para chegar na proxima cidade
+        return 1;
     }
+
 }
 
 void calc_preco_combustivel(Transito *n1, float combustivel){
 
     n1->dinheiro = 5.50 * combustivel; // calcula a quantidade gasta de dinheiro para colocar a quantidade de litros de gasolina
 
+}
+
+void diminui_combustivel(Transito *n1, int km){
+    while(km > 12){
+        n1->combustivel--;
+        km -= 12;
+    }
 }
 
 int main(){
@@ -247,19 +258,9 @@ int main(){
 
     for(k = qtd; k > 0; k--){
 
-        //printf("Numeros de viagens disponiveis: %d\n\n", qtd);
+        printf("Numeros de viagens disponiveis: %d\n\n", qtd);
 
-        //printf("Quantidade de kilometros percorridos: %dKM\n\n", km);
-
-        //printf("Quantidade de dinheiro gasto: R$%.2f\n\n", n1.dinheiro);
-
-        //printf("Quantidade de combustivel disponivel: %.2f\n\n", n1.combustivel);
-
-        //printf("Quantidade de tempo gasto: %d horas e %d minutos\n\n", n1.horas, n1.minutos);
-
-        //printf("Voce esta em %s\n\n", n1.cidades[vetorIndices[i - 1]]);
-
-        //printf("Digite o nome da cidade destino, em letras minusculas:\n");
+        printf("Digite o nome da cidade destino, em letras minusculas:\n");
 
         scanf("%[^\n]%*c", str); // leio a string ate o enter
 
@@ -267,22 +268,32 @@ int main(){
 
         while(1){
             if(qual_cidade_abastecer(n1, vetorIndices[i - 1], vetorIndices[i]) == 1){
-
-                //printf("\nVoce devera abastecer em %s\n", n1.cidades[vetorIndices[i - 1]]);
-
-                //printf("\nquantos litros de combustivel vc deseja colocar?\n");
-
+                printf("Voce devera abastecer em %s\n\n", n1.cidades[vetorIndices[i-1]]);
+                printf("Digite quantos litros de combustivel voce deseja colocar:\n");
                 scanf("%f%*c", &somaComb);
-
                 calc_preco_combustivel(&n1, somaComb);
-
                 n1.combustivel += somaComb;
             } else{
+                printf("Seu combustivel sera suficiente para chegar em %s\n\n", n1.cidades[vetorIndices[i]]);
                 break;
             }
         }
 
+        diminui_combustivel(&n1, calc_distancia(n1, vetorIndices[i -1], vetorIndices[i])); // diminui o combustivel conforme o carro anda
+
+        calc_tempo(&n1, vetorIndices[i-1], vetorIndices[i]);
+
         km += calc_distancia(n1, vetorIndices[i - 1], vetorIndices[i]); //acumula a distancia em km entre as cidades
+
+        printf("Quantidade de kilometros totais percorridos: %dKM\n\n", km);
+
+        printf("Quantidade de dinheiro gasto: R$%.2f\n\n", n1.dinheiro);
+
+        printf("Quantidade de combustivel disponivel: %.2f\n\n", n1.combustivel);
+
+        printf("Quantidade de tempo total gasto: %d horas e %d minutos\n\n", n1.horas, n1.minutos);
+
+        printf("Voce esta em %s\n\n", n1.cidades[vetorIndices[i - 1]]);
 
         i++;
         qtd--;
