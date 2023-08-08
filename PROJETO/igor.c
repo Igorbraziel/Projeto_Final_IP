@@ -278,6 +278,15 @@ void diminui_combustivel(Transito *n1){
     }
 }
 
+void printUpper(char *str){
+    int i = 0;
+    while(str[i] != '\0'){
+        printf("%c", str[i] - 32);
+        i++;
+    }
+    printf("\n\n");
+}
+
 int main(){
     Transito n1;
     int qtd = 0, i = 0, k = 0;
@@ -377,7 +386,8 @@ int main(){
         printf("\nA viagem terá %dkm\n\n", n1.km);
 
         sleep(3);
-        printf("voce esta em %s\n\n", n1.cidades[vetorIndices[i + 1]]);
+        printf("VOCE ESTA EM ");
+        printUpper(n1.cidades[vetorIndices[i + 1]]);
 
         sleep(3);
         if(qtd > 1){
