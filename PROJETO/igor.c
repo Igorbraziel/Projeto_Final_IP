@@ -232,11 +232,11 @@ void calc_combustivel(Transito *n1, float *valor, float *litros, int indice){
 
 void autonomia(Transito n1){
     if(n1.indiceComb == 1){
-        printf("O alcance do seu carro no momento é de: %d KM\n", (int) n1.combustivel * 12);
+        printf("\n\nO alcance do seu carro no momento é de: %d KM\n", (int) n1.combustivel * 12);
     } else if(n1.indiceComb == 2){
-        printf("O alcance do seu carro no momento é de: %d KM\n", (int) n1.combustivel * 8);
+        printf("\n\nO alcance do seu carro no momento é de: %d KM\n", (int) n1.combustivel * 8);
     } else if(n1.indiceComb == 3){
-        printf("O alcance do seu carro no momento é de: %d KM\n", (int) n1.combustivel * 15);
+        printf("\n\nO alcance do seu carro no momento é de: %d KM\n", (int) n1.combustivel * 15);
     }
 }
 
@@ -413,7 +413,7 @@ int main(){
     printf("O total de combustível gasto é %.2f litros.\n", n1.combustivelTotal);
     printf("O total gasto é R$%.2f.\n", n1.dinheiro);
     printf("O tempo total da viagem é %d horas e %d minutos.\n", n1.horasf, n1.minutosf);
-    printf("A distância total da viagem será %dkm.\n", n1.kmf);
+    printf("A distância total da viagem será %dkm.\n\n", n1.kmf);
    
         free_matrizes(&n1); // liberando memoria alocada  
     
