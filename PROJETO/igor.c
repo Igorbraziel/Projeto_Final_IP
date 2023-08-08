@@ -344,8 +344,6 @@ int main(){
     vetorIndices[i] = comparar_string(n1, str);
 
     sleep(2);
-    printf("\n\nDigite quantos litros de combustível seu carro possui: (NO MÁXIMO 140 LITROS)\n");
-    scanf("%f%*c", &n1.combustivel);
 
 
     while(qtd > 0){
