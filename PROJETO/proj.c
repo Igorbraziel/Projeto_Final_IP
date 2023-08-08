@@ -237,16 +237,18 @@ int main(){
         printf("\nDigite o nome da cidade que voce deseja inicializar seu trajeto, em letras minusculas:\n");
 
         scanf("%[^\n]%*c", str1); // leio a string ate o enter
+        
+        m=i;
 
+        vetorIndices[m+j] = comparar_string(n1, str1); // coloco o indice da cidade no meu vetor de indices
+        
         sleep(1);
         printf("\nDigite o nome da cidade que voce deseja ir, em letras minusculas:\n");
 
         scanf("%[^\n]%*c", str2); // leio a string ate o enter
 
-        m=i;
-
-        vetorIndices[m+j] = comparar_string(n1, str1); // coloco o indice da cidade no meu vetor de indices
         vetorIndices[m+j+1] = comparar_string(n1, str2);
+
         km = calc_distancia(n1, vetorIndices[m+j], vetorIndices[m+j+1]); //acumula a distancia em km entre as cidades
         j++;
         
@@ -278,10 +280,10 @@ int main(){
             minutosf %= 60;
         }
 
-        sleep(2);
+        
         printf("Você gastará %d horas e %d minutos", horas, minutos);
 
-        sleep(1);
+        
         printf("\nA viagem terá %dkm\n\n", km);
     
         sleep(3);
@@ -296,7 +298,8 @@ int main(){
     printf("O total de combustível gasto é %.2f litros.\n", n1.combustivel);
     printf("O total gasto é R$%.2f.\n", n1.dinheiro);
     printf("O tempo total da viagem é %d horas e %d minutos.\n", horasf, minutosf);
-    printf("A distância total da viagem será %.0fkm.\n", kmf);
+    printf("A distância total da viagem será %.0fkm.\n\n", kmf);
+    printf("==========================================================RESUMO FINAL==========================================================\n\n\n\n");
 
     
     
