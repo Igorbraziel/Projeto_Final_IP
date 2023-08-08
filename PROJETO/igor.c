@@ -155,7 +155,7 @@ int comparar_string(Transito n1, char *str){
                 return i;
             }
         }
-        printf("Cidade nao encontrada, digite novamente por favor: ");
+        printf("Cidade não encontrada, digite novamente por favor: ");
         scanf("%[^\n]%*c", str); // leio a string ate o enter
     }
 }
@@ -181,47 +181,50 @@ void calc_tempo(int km, Transito *n1){
  
 }
 
-void calc_combustivel(Transito *n1, float *valor, float *litros){
+void calc_combustivel(Transito *n1, float *valor, float *litros, int indice){
     float x;
 
     while(1){
         if(n1->indiceComb == 1){
             if((n1->combustivel * 12) < n1->km){
-                printf("\nCombustível insuficiente, abasteça no posto mais próximo!!!\n");
+                printf("\nCombustível insuficiente, abasteça em %s!!!\n", n1->cidades[indice]);
                 x = n1->km - (n1->combustivel * 12);
                 *litros = x/12;
                 *valor = (*litros) * 5.5;
-                printf("Você precisara de %.2f litros\n", *litros);
-                printf("O valor sera R$%.2f\n", *valor);
+                sleep(2);
+                printf("Você precisará de %.2f litros\n", *litros);
+                printf("O valor será R$%.2f\n", *valor);
                 break;
             } else {
-                printf("Você possui combustível suficiente");
+                printf("\nVocê possui combustível suficiente\n");
                 break;
             }
         } else if(n1->indiceComb == 2){
             if((n1->combustivel * 8) < n1->km){
-                printf("\nCombustível insuficiente, abasteça no posto mais próximo!!!\n");
+                printf("\nCombustível insuficiente, abasteça em %s!!!\n", n1->cidades[indice]);
                 x = n1->km - (n1->combustivel * 8);
                 *litros = x/8;
                 *valor = (*litros) * 3.5;
-                printf("Você precisara de %.2f litros\n", *litros);
-                printf("O valor sera R$%.2f\n", *valor);
+                sleep(2);
+                printf("Você precisará de %.2f litros\n", *litros);
+                printf("O valor será R$%.2f\n", *valor);
                 break;
             } else {
-                printf("Você possui combustível suficiente");
+                printf("\nVocê possui combustível suficiente\n");
                 break;
             }
         } else if(n1->indiceComb == 3){
             if((n1->combustivel * 15) < n1->km){
-                printf("\nCombustível insuficiente, abasteça no posto mais próximo!!!\n");
+                printf("\nCombustível insuficiente, abasteça em %s!!!\n", n1->cidades[indice]);
                 x = n1->km - (n1->combustivel * 15);
                 *litros = x/15;
                 *valor = (*litros) * 4.98;
-                printf("Você precisara de %.2f litros\n", *litros);
-                printf("O valor sera R$%.2f\n", *valor);
+                sleep(2);
+                printf("Você precisará de %.2f litros\n", *litros);
+                printf("O valor será R$%.2f\n", *valor);
                 break;
             } else {
-                printf("Você possui combustível suficiente\n");
+                printf("\nVocê possui combustível suficiente\n");
                 break;
             }
         }
@@ -231,19 +234,19 @@ void calc_combustivel(Transito *n1, float *valor, float *litros){
 
 void autonomia(Transito n1){
     if(n1.indiceComb == 1){
-        printf("O alcance do seu carro no momento e de: %d KM\n", (int) n1.combustivel * 12);
+        printf("O alcance do seu carro no momento é de: %d KM\n", (int) n1.combustivel * 12);
     } else if(n1.indiceComb == 2){
-        printf("O alcance do seu carro no momento e de: %d KM\n", (int) n1.combustivel * 8);
+        printf("O alcance do seu carro no momento é de: %d KM\n", (int) n1.combustivel * 8);
     } else if(n1.indiceComb == 3){
-        printf("O alcance do seu carro no momento e de: %d KM\n", (int) n1.combustivel * 15);
+        printf("O alcance do seu carro no momento é de: %d KM\n", (int) n1.combustivel * 15);
     }
 }
 
 int escolhe_combustivel(Transito *n1){
 
-    printf("Combustiveis disponiveis:\n-gasolina\n-etanol\n-diesel\n");
+    printf("Combustíveis disponíveis:\n-gasolina\n-etanol\n-diesel\n");
 
-    printf("\nDigite o tipo de combustivel que vc deseja utilizar, em letras minusculas:\n");
+    printf("\nDigite o tipo de combustível que você deseja utilizar, em letras minusculas:\n");
 
     scanf("%[^\n]%*c", n1->tipoComb); // leio a string ate o enter
 
@@ -251,7 +254,7 @@ int escolhe_combustivel(Transito *n1){
         if(strcmp(n1->tipoComb, "gasolina") == 0) return 1;
         if(strcmp(n1->tipoComb, "etanol") == 0) return 2;
         if(strcmp(n1->tipoComb, "diesel") == 0) return 3;
-        printf("Combustivel indisponivel, digite novamente: ");
+        printf("Combustível indisponivel, digite novamente: ");
         scanf("%[^\n]%*c", n1->tipoComb); // leio a string ate o enter
     }
 
@@ -281,7 +284,11 @@ void diminui_combustivel(Transito *n1){
 void printUpper(char *str){
     int i = 0;
     while(str[i] != '\0'){
-        printf("%c", str[i] - 32);
+        if(str[i] != ' '){
+            printf("%c", str[i] - 32);
+        } else{
+            printf("%c", str[i]);
+        }
         i++;
     }
     printf("\n\n");
@@ -316,6 +323,8 @@ int main(){
 
     scanf("%d%*c", &qtd);
 
+    if(qtd == 0) return 0;
+
     k = qtd;
 
     vetorIndices = (int *) malloc((qtd + 1) * sizeof(int)); // alocando a memoria necessaria para armazenar os indices das cidades
@@ -337,7 +346,7 @@ int main(){
     vetorIndices[i] = comparar_string(n1, str);
 
     sleep(2);
-    printf("\n\nDigite quantos litros de combustivel seu carro possui: ");
+    printf("\n\nDigite quantos litros de combustível seu carro possui: (NO MÁXIMO 140 LITROS)\n");
     scanf("%f%*c", &n1.combustivel);
 
 
@@ -360,7 +369,7 @@ int main(){
     
         sleep(3);
 
-        calc_combustivel(&n1, &valor, &litros);
+        calc_combustivel(&n1, &valor, &litros, vetorIndices[i]);
         
         n1.dinheiro += valor;
         n1.combustivelTotal += litros;
@@ -386,7 +395,7 @@ int main(){
         printf("\nA viagem terá %dkm\n\n", n1.km);
 
         sleep(3);
-        printf("VOCE ESTA EM ");
+        printf("VOCÊ ESTÁ EM ");
         printUpper(n1.cidades[vetorIndices[i + 1]]);
 
         sleep(3);
