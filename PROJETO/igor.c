@@ -3,8 +3,6 @@
 #include <string.h>
 #include <unistd.h>
 
-#define MAX 100
-
 void introducao(){
     sleep(2);
     printf("==========================================================ANÁLISE DE VIAGENS==========================================================\n\n");
