@@ -246,14 +246,14 @@ int escolhe_combustivel(Transito *n1){
 
     printf("\nDigite o tipo de combustível que você deseja utilizar, em letras minusculas:\n");
 
-    scanf("%[^\n]%*c", n1->tipoComb); // leio a string ate o enter
+    scanf("%s%*c", n1->tipoComb); // leio a string 
 
     while(1){
         if(strcmp(n1->tipoComb, "gasolina") == 0) return 1;
         if(strcmp(n1->tipoComb, "etanol") == 0) return 2;
         if(strcmp(n1->tipoComb, "diesel") == 0) return 3;
         printf("Combustível indisponivel, digite novamente: ");
-        scanf("%[^\n]%*c", n1->tipoComb); // leio a string ate o enter
+        scanf("%s%*c", n1->tipoComb); // leio a string ate o enter
     }
 
 }
@@ -294,7 +294,7 @@ void printUpper(char *str){
 
 int main(){
     Transito n1;
-    int qtd = 0, i = 0, k = 0;
+    int qtd = 0, i = 0;
     int *vetorIndices;
     char str[100];
     float valor = 0, litros = 0;
@@ -322,8 +322,6 @@ int main(){
     scanf("%d%*c", &qtd);
 
     if(qtd == 0) return 0;
-
-    k = qtd;
 
     vetorIndices = (int *) malloc((qtd + 1) * sizeof(int)); // alocando a memoria necessaria para armazenar os indices das cidades
 
@@ -357,10 +355,6 @@ int main(){
         n1.km = calc_distancia(n1, vetorIndices[i], vetorIndices[i + 1]); //retorna a distancia em km entre as cidades
       
         n1.kmf += n1.km;
-
-        sleep(1);
-
-        if(k == qtd) autonomia(n1);
     
         sleep(3);
 
