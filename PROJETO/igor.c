@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 void introducao(){
-    sleep(2);
+    sleep(1);
     printf("==========================================================ANÁLISE DE VIAGENS==========================================================\n\n");
     printf("\nDigite a quantidade de viagens que voce deseja fazer: \n");
 
@@ -172,7 +172,7 @@ void calc_tempo(int km, Transito *n1){
 
     n1->minutos = (km * 60)/80;
 
-    while(n1->minutos > 60){
+    while(n1->minutos >= 60){
         n1->horas++;
         n1->minutos -= 60;
     }
@@ -375,7 +375,7 @@ int main(){
         n1.minutosf += n1.minutos;
 
         while(1){
-            if(n1.minutosf > 60){
+            if(n1.minutosf >= 60){
                 n1.horasf++;
                 n1.minutosf -= 60;
             } else{
