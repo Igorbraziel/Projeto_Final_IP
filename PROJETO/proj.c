@@ -6,8 +6,8 @@
 #define MAX 100
 
 void introducao(){
-    sleep(2);
     printf("==========================================================ANÁLISE DE VIAGENS==========================================================\n\n");
+    sleep(2);
     printf("\nDigite a quantidade de viagens que voce deseja fazer: \n");
 
 }
@@ -18,6 +18,7 @@ struct transito{
     float dinheiro, combustivel;
     int horas, minutos;
     char tipoComb[32];
+    int indice_cidade_final[100];
 };
 
 typedef struct transito Transito; //definindo o nome da estrutura
@@ -132,11 +133,13 @@ void free_matrizes(Transito *n1){
 
     free(n1->cidades);
     free(n1->distancia);
+
 }
 
 void print_cidades(Transito n1){
     int i;
     printf("\nAS CIDADES DISPONÍVEIS NO MOMENTO SÃO:\n\n");
+    sleep(2);
     for(i = 0; i < 30; i++){
             printf("-%s\n", n1.cidades[i]);
     }
@@ -180,8 +183,8 @@ void calc_tempo(int km, int *horas, int *minutos){
  
 }
 
-void calc_combustivel(int combustivel, float km, int m, float kml, float *valor, float *litros, float valorcomb){
-    float x;
+int calc_combustivel(int combustivel, float km, float kml, float *valor, float *litros, float valorcomb){
+    float x, litrosr;
 
     x = combustivel-km;
 
@@ -192,18 +195,22 @@ void calc_combustivel(int combustivel, float km, int m, float kml, float *valor,
         *valor = *litros * valorcomb;
         printf("Você precisara de %.2f litros\n", *litros);
         printf("O valor seŕa R$%.2f\n", *valor);
-        
+        return 0;
     }
     else{
-        printf("Você possui combustível suficiente\n");
+        printf("\n\nVocê possui combustível suficiente para esse destino\n");
+        litrosr = (x/kml);
+        printf("Sobrará %.2f litros\n", litrosr);
+        return x;
     }
 
 }
 
 int escolhe_combustivel(Transito *n1){
-
-    printf("Combustíveis disponíveis:\n-gasolina\n-etanol\n-diesel\n");
-
+    sleep(2);
+    printf("\nCombustíveis disponíveis:\n-gasolina\n-etanol\n-diesel\n");
+    
+    sleep(1);
     printf("\nDigite o tipo de combustível que você deseja utilizar, em letras minusculas:\n");
 
     scanf("%[^\n]%*c", n1->tipoComb); // leio a string ate o enter
@@ -220,15 +227,16 @@ int escolhe_combustivel(Transito *n1){
 
 int main(){
     Transito n1;
-    int qtd, i = 0, somaDist = 0, k = 0, km = 0, m = 0, j=0;
+    int qtd, i = 0, km = 0;
     int *vetorIndices;
     char str1[100], str2[100];
-    float somaComb = 0;
-    float valor, litros;
+    float valor=0, litros=0;
     int horas, minutos, horasf, minutosf;
-    float kml, kmf;
+    float kml, kmf=0;
     int combustivel, tipocomb;
-    float valorcomb;
+    float valorcomb, qtdcomb=0;
+    int indice;
+    int x;
     
 
     n1.distancia =  NULL;
@@ -250,50 +258,61 @@ int main(){
 
     tipocomb = escolhe_combustivel(&n1);
 
-    printf("Digite o valor do litro de combustível na sua região: ");
+    sleep(1);
+    if(tipocomb == 1){
+    printf("Digite o valor do litro da %s na sua região: ", n1.tipoComb);
+    }
+    else{
+        printf("Digite o valor do litro do %s na sua região: ", n1.tipoComb);
+    }
     scanf("%f", &valorcomb);
 
-    sleep(2);
     printf("\n\nDigite quantos km seu carro faz ainda com o combustivel que possui:");
     scanf("%d%*c", &combustivel);
     sleep(1);
-    printf("Informe quantos km seu carro faz por litro:");
+    printf("Informe quantos km seu carro faz por litro de combustivel:");
     scanf("%f%*c", &kml);
 
 
 
-        sleep(3);
+        sleep(1);
         print_cidades(n1); //mostro na tela as cidades disponiveis para navegação
 
-        sleep(2);
+        sleep(1);
         printf("\nDigite o nome da cidade que voce deseja inicializar seu trajeto, em letras minusculas:\n");
 
         scanf("%[^\n]%*c", str1); // leio a string ate o enter
         
         vetorIndices[0] = comparar_string(n1, str1); // coloco o indice da cidade no meu vetor de indices
+        n1.indice_cidade_final[0] = vetorIndices[0];
+
+        indice = vetorIndices[0];
     
     while(i<qtd){
     
-        m=i;
+        vetorIndices[0] = indice;
         
-        sleep(1);
-        printf("\nDigite o nome da cidade que voce deseja ir, em letras minusculas:\n");
-
+        if(i==0){
+            sleep(1);
+            printf("\nDigite o nome da cidade que voce deseja ir, em letras minusculas:\n");
+        }
+        else{
+            sleep(1);
+            printf("\nDigite o seu próximo destino, em letras minusculas:\n");
+        }
         scanf("%[^\n]%*c", str2); // leio a string ate o enter
 
-        vetorIndices[m+j+1] = comparar_string(n1, str2);
+        vetorIndices[1] = comparar_string(n1, str2);
+        n1.indice_cidade_final[i+1] = vetorIndices[1];
 
-        km = calc_distancia(n1, vetorIndices[m+j], vetorIndices[m+j+1]); //acumula a distancia em km entre as cidades
-        j++;
+
+        km = calc_distancia(n1, vetorIndices[0], vetorIndices[1]); //acumula a distancia em km entre as cidades
         
         kmf+=km;
         
-            
-        
-    
         sleep(3);
-        calc_combustivel(combustivel, km, m, kml, &valor, &litros, valorcomb);
-        
+        qtdcomb = calc_combustivel(combustivel, km, kml, &valor, &litros, valorcomb);
+        combustivel = qtdcomb;
         n1.dinheiro+=valor;
         n1.combustivel+=litros;
 
@@ -309,23 +328,44 @@ int main(){
         else{
             minutosf %= 60;
         }
-
         
         printf("Você gastará %d horas e %d minutos", horas, minutos);
 
-        
         printf("\nA viagem terá %dkm\n\n", km);
     
         sleep(3);
         if(i<qtd-1){
-            printf("PROSSIGA SUA VIAGEM\n\n");
+            printf("\nVocê está em %s\n\n", str2);
+            sleep(1);
+            printf("SUA VIAGEM NÃO ACABOU, PROSSIGA!\n\n");
         }
-    i++;
+
+        indice = vetorIndices[1];
+
+        sleep(3);
+    
+        i++;
+        
+        if(i==qtd){
+            printf("\nVIAGEM FINALIZADA\n\n");
+        }
+
     }
 
     sleep(3);
     printf("==========================================================RESUMO FINAL==========================================================\n\n");
-    printf("O total de combustível gasto é %.2f litros.\n", n1.combustivel);
+        x = n1.indice_cidade_final[0];
+        printf("Sua cidade inicial foi: %s\n", n1.cidades[x]);
+        printf("Seus destinos foram:");
+    for(i=1;i<=qtd;i++){
+        x = n1.indice_cidade_final[i];
+        printf(" %s", n1.cidades[x]);
+        if(i<qtd){
+            printf(",");
+        }
+
+    }
+    printf("\nO total de combustível gasto é %.2f litros.\n", n1.combustivel);
     printf("O total gasto é R$%.2f.\n", n1.dinheiro);
     printf("O tempo total da viagem é %d horas e %d minutos.\n", horasf, minutosf);
     printf("A distância total da viagem será %.0fkm.\n\n", kmf);
@@ -333,9 +373,10 @@ int main(){
 
     
     
+        free(vetorIndices); // liberando memoria alocada
         free_matrizes(&n1); // liberando memoria alocada  
     
-        free(vetorIndices); // liberando memoria alocada 
+         
         
     
         return 0;
