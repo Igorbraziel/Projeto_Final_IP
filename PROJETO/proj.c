@@ -17,6 +17,7 @@ struct transito{
     char **cidades;
     float dinheiro, combustivel;
     int horas, minutos;
+    char tipoComb[32];
 };
 
 typedef struct transito Transito; //definindo o nome da estrutura
@@ -179,7 +180,7 @@ void calc_tempo(int km, int *horas, int *minutos){
  
 }
 
-void calc_combustivel(int combustivel, float km, int m, float kml, float *valor, float *litros){
+void calc_combustivel(int combustivel, float km, int m, float kml, float *valor, float *litros, float valorcomb){
     float x;
 
     x = combustivel-km;
@@ -188,13 +189,31 @@ void calc_combustivel(int combustivel, float km, int m, float kml, float *valor,
         printf("\n\nCombustível insuficiente, abasteça no posto mais próximo!!!\n");
         x*=-1;
         *litros = (x/kml);
-        *valor = *litros * 5.5;
+        *valor = *litros * valorcomb;
         printf("Você precisara de %.2f litros\n", *litros);
         printf("O valor seŕa R$%.2f\n", *valor);
         
     }
     else{
-        printf("Você possui combustível suficiente");
+        printf("Você possui combustível suficiente\n");
+    }
+
+}
+
+int escolhe_combustivel(Transito *n1){
+
+    printf("Combustíveis disponíveis:\n-gasolina\n-etanol\n-diesel\n");
+
+    printf("\nDigite o tipo de combustível que você deseja utilizar, em letras minusculas:\n");
+
+    scanf("%[^\n]%*c", n1->tipoComb); // leio a string ate o enter
+
+    while(1){
+        if(strcmp(n1->tipoComb, "gasolina") == 0) return 1;
+        if(strcmp(n1->tipoComb, "etanol") == 0) return 2;
+        if(strcmp(n1->tipoComb, "diesel") == 0) return 3;
+        printf("Combustível indisponivel, digite novamente: ");
+        scanf("%[^\n]%*c", n1->tipoComb); // leio a string ate o enter
     }
 
 }
@@ -208,7 +227,8 @@ int main(){
     float valor, litros;
     int horas, minutos, horasf, minutosf;
     float kml, kmf;
-    int combustivel;
+    int combustivel, tipocomb;
+    float valorcomb;
     
 
     n1.distancia =  NULL;
@@ -222,13 +242,25 @@ int main(){
 
     init_cidades(&n1); //inicializando o nome das cidades com alocacao de memoria
 
+    vetorIndices = (int *) malloc((qtd + 1) * sizeof(int)); // alocando a memoria necessaria para armazenar os indices das cidades
+    
     introducao();
 
     scanf("%d%*c", &qtd);
 
-    while(i<qtd){
+    tipocomb = escolhe_combustivel(&n1);
 
-        vetorIndices = (int *) malloc((qtd + 1) * sizeof(int)); // alocando a memoria necessaria para armazenar os indices das cidades
+    printf("Digite o valor do litro de combustível na sua região: ");
+    scanf("%f", &valorcomb);
+
+    sleep(2);
+    printf("\n\nDigite quantos km seu carro faz ainda com o combustivel que possui:");
+    scanf("%d%*c", &combustivel);
+    sleep(1);
+    printf("Informe quantos km seu carro faz por litro:");
+    scanf("%f%*c", &kml);
+
+
 
         sleep(3);
         print_cidades(n1); //mostro na tela as cidades disponiveis para navegação
@@ -238,9 +270,11 @@ int main(){
 
         scanf("%[^\n]%*c", str1); // leio a string ate o enter
         
+        vetorIndices[0] = comparar_string(n1, str1); // coloco o indice da cidade no meu vetor de indices
+    
+    while(i<qtd){
+    
         m=i;
-
-        vetorIndices[m+j] = comparar_string(n1, str1); // coloco o indice da cidade no meu vetor de indices
         
         sleep(1);
         printf("\nDigite o nome da cidade que voce deseja ir, em letras minusculas:\n");
@@ -253,16 +287,12 @@ int main(){
         j++;
         
         kmf+=km;
-
-        sleep(2);
-        printf("\n\nDigite quantos km seu carro faz ainda com o combustivel que possui:");
-        scanf("%d%*c", &combustivel);
-        sleep(1);
-        printf("Informe quantos km seu carro faz por litro:");
-        scanf("%f%*c", &kml);
+        
+            
+        
     
         sleep(3);
-        calc_combustivel(combustivel, km, m, kml, &valor, &litros);
+        calc_combustivel(combustivel, km, m, kml, &valor, &litros, valorcomb);
         
         n1.dinheiro+=valor;
         n1.combustivel+=litros;
