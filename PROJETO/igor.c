@@ -6,7 +6,7 @@
 void introducao(){
     sleep(1);
     printf("==========================================================ANÁLISE DE VIAGENS==========================================================\n\n");
-    printf("\nDigite a quantidade de viagens que voce deseja fazer: \n");
+    printf("\nDigite a quantidade de viagens que você deseja fazer: \n");
 
 }
 
@@ -153,7 +153,7 @@ int comparar_string(Transito n1, char *str){
                 return i;
             }
         }
-        printf("Cidade não encontrada, digite novamente por favor: ");
+        printf("Cidade não encontrada, por favor, digite novamente: ");
         scanf("%[^\n]%*c", str); // leio a string ate o enter
     }
 }
@@ -258,7 +258,7 @@ int escolhe_combustivel(Transito *n1){
         if(strcmp(n1->tipoComb, "gasolina") == 0) return 1;
         if(strcmp(n1->tipoComb, "etanol") == 0) return 2;
         if(strcmp(n1->tipoComb, "diesel") == 0) return 3;
-        printf("Combustível indisponivel, digite novamente: ");
+        printf("Combustível indisponível, por favor, digite novamente: ");
         scanf("%s%*c", n1->tipoComb); // leio a string ate o enter
     }
 
@@ -341,7 +341,7 @@ int main(){
 
     sleep(2);
 
-    printf("Digite o nome da cidade que voce deseja inicializar seu trajeto, em letras minusculas:\n");
+    printf("Digite o nome da cidade que você deseja inicializar seu trajeto, em letras minusculas:\n");
 
     scanf("%[^\n]%*c", str); // leio a string ate o enter
 
@@ -352,7 +352,7 @@ int main(){
     while(qtd > 0){
 
         sleep(1);
-        printf("\nDigite o nome da cidade que voce deseja ir, em letras minusculas:\n");
+        printf("\nDigite o nome da cidade que você deseja ir, em letras minusculas:\n");
 
         scanf("%[^\n]%*c", str); // leio a string ate o enter
 
