@@ -300,10 +300,8 @@ void printUpper(char *str){
 }
 
 void introducao1(){
-    printf("==========================================================ANÁLISE DE VIAGENS==========================================================\n\n");
     sleep(2);
     printf("\nDigite a quantidade de viagens que voce deseja fazer: \n");
-
 }
 
 struct transito1{
@@ -795,7 +793,6 @@ int main(){
 
         free(vetorIndices); // liberando memoria alocada 
     }    
-
 
     return 0;
 }
