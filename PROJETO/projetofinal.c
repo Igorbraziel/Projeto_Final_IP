@@ -561,8 +561,10 @@ int main(){
 
     init_cidades1(&n11); //inicializando o nome das cidades com alocacao de memoria
 
-     horasf1=0;
-
+    horasf1=0;
+    minutos1=0;
+    minutosf1=0;
+    horas1=0;
     printf("==========================================================ANÁLISE DE VIAGENS==========================================================\n\n");
     printf("Digite 1 se quiser colocar informações precisas do seu carro\nDigite 2 para usar nossas informações aproximadas\n\n");
     scanf("%d", &numinicial);
@@ -687,6 +689,7 @@ int main(){
         printf("O total gasto é R$%.2f.\n", n11.dinheiro1);
         printf("O tempo total da viagem é %d horas e %d minutos.\n", horasf1, minutosf1);
         printf("A distância total da viagem será %.0fkm.\n\n", kmf1);
+        sleep(1);
         printf("==========================================================RESUMO FINAL==========================================================\n\n\n\n");
 
 
