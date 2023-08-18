@@ -520,7 +520,7 @@ int escolhe_combustivel1(Transito1 *n1){
 int main(){
     Transito1 n11;
     int qtd1, i1 = 0, km1 = 0;
-    int *vetorIndices1;
+    int vetorIndices1[30];
     char str11[100], str21[100];
     float valor1=0, litros1=0;
     int horas1, minutos1, horasf1, minutosf1;
@@ -561,8 +561,8 @@ int main(){
 
     init_cidades1(&n11); //inicializando o nome das cidades com alocacao de memoria
 
-    vetorIndices1 = (int *) malloc((qtd1 + 1) * sizeof(int)); // alocando a memoria necessaria para armazenar os indices das cidades
-    
+     horasf1=0;
+
     printf("==========================================================ANÁLISE DE VIAGENS==========================================================\n\n");
     printf("Digite 1 se quiser colocar informações precisas do seu carro\nDigite 2 para usar nossas informações aproximadas\n\n");
     scanf("%d", &numinicial);
@@ -634,7 +634,7 @@ int main(){
             n11.combustivel1+=litros1;
 
             calc_tempo1(km1, &horas1, &minutos1);
-
+           
             horasf1+=horas1;
             minutosf1+=minutos1;
 
@@ -682,6 +682,7 @@ int main(){
             }
 
         }
+        sleep(2);
         printf("\nO total de combustível gasto é %.2f litros.\n", n11.combustivel1);
         printf("O total gasto é R$%.2f.\n", n11.dinheiro1);
         printf("O tempo total da viagem é %d horas e %d minutos.\n", horasf1, minutosf1);
@@ -690,7 +691,6 @@ int main(){
 
 
 
-            free(vetorIndices1); // liberando memoria alocada
             free_matrizes1(&n11); // liberando memoria alocada  
 
     }  
