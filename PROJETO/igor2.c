@@ -329,6 +329,10 @@ int main(){
 
     if(qtd == 0) return 0;
 
+    printf("Digite 1 se quiser colocar informações precisas do seu carro\nDigite 2 para usar nossas informações aproximadas\n");
+
+    scanf("%d%*c", num);
+
     vetorIndices = (int *) malloc((qtd + 1) * sizeof(int)); // alocando a memoria necessaria para armazenar os indices das cidades
 
     sleep(2);
